@@ -138,6 +138,10 @@ Run `npm test` to start Vitest in watch mode, or `npm run test:run` to run it on
 
 Most of the tests cover `src/sync` and `src/api`. Component tests cover the main flows end to end: drag and drop, keyboard-only moves, failed saves, teammates' updates and bulk moves.
 
+## Demo Link
+
+- Product Walkthrough: https://shorturl.at/W2HKA
+
 ## Deployed Link
 
 - Sales pipeline: https://sales-pipeline-nu.vercel.app/
