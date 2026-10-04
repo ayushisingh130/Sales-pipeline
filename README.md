@@ -2,7 +2,6 @@
 
 A shared sales pipeline for 50,000 deals: a Kanban board (and a dense List view), single and bulk moves on a slow, unreliable network, teammates' live changes that never move things under your cursor, and full keyboard use. There's no backend: a fake API inside the app simulates latency, failures and teammates, and every setting can be changed while the app runs.
 
-The design write-up is in [WRITEUP.md](WRITEUP.md).
 
 ## Run it
 
