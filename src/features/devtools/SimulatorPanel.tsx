@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useStore } from 'zustand';
 import { DEFAULT_SIM_CONFIG, type SimConfig } from '../../api/simConfig';
 import { useServices } from '../../services';
-import './SimulatorPanel.css';
 
 const FAILURE_MIXES: Record<string, { label: string; mix: SimConfig['failureMix'] }> = {
   mixed: { label: 'Mixed', mix: DEFAULT_SIM_CONFIG.failureMix },
@@ -11,6 +10,10 @@ const FAILURE_MIXES: Record<string, { label: string; mix: SimConfig['failureMix'
 };
 
 /** The settings used for the demo recording: frequent failures, teammates busy on screen. */
+const HEADING = 'mt-1 text-xs font-semibold tracking-wide text-muted uppercase';
+const LABEL = 'flex flex-wrap items-center gap-1';
+const CHECK = 'flex cursor-pointer items-center gap-1.5';
+
 const DEMO_SETTINGS: Partial<SimConfig> = {
   failureRate: 0.4,
   teammateRate: 5,
@@ -21,10 +24,15 @@ const DEMO_SETTINGS: Partial<SimConfig> = {
 /**
  * Fake-backend controls, adjustable while the app runs. Toggled with the button or the backtick
  * key; also settable from the URL (`?fail=0.4&rate=5&visible=1`). Not a modal: you change a
- * setting and keep using the app.
+ * setting and keep using the app, so clicking elsewhere doesn't close it. × or Esc does.
  */
 export function SimulatorPanel() {
   const [open, setOpen] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const close = () => {
+    setOpen(false);
+    toggleRef.current?.focus();
+  };
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -40,8 +48,9 @@ export function SimulatorPanel() {
   return (
     <>
       <button
+        ref={toggleRef}
         type="button"
-        className="sim-toggle"
+        className="btn flex-none"
         aria-expanded={open}
         aria-controls="simulator-panel"
         aria-keyshortcuts="`"
@@ -49,12 +58,12 @@ export function SimulatorPanel() {
       >
         Simulator <kbd>`</kbd>
       </button>
-      {open && <SimulatorControls />}
+      {open && <SimulatorControls onClose={close} />}
     </>
   );
 }
 
-function SimulatorControls() {
+function SimulatorControls({ onClose }: { onClose: () => void }) {
   const { simulator } = useServices();
   const config = useStore(simulator.config);
   const set = (changes: Partial<SimConfig>) => simulator.config.setState(changes);
@@ -64,16 +73,32 @@ function SimulatorControls() {
     )?.[0] ?? 'mixed';
 
   return (
-    <section id="simulator-panel" className="sim-panel" aria-label="Simulator">
-      <h2>Network</h2>
+    <section
+      id="simulator-panel"
+      className="popover fixed top-14 right-4 z-25 flex max-h-[calc(100vh-72px)] w-[min(340px,calc(100vw-32px))] flex-col gap-2 overflow-auto px-4 py-3 shadow-xl"
+      aria-label="Simulator"
+      onKeyDown={(event) => event.key === 'Escape' && onClose()}
+    >
+      <div className="flex items-center justify-between">
+        <h2 className={HEADING}>Network</h2>
+        <button
+          type="button"
+          className="-mr-2 cursor-pointer rounded px-2 text-lg leading-none text-muted hover:text-ink"
+          aria-label="Close simulator"
+          onClick={onClose}
+        >
+          ×
+        </button>
+      </div>
       <Percent
         label="Failed requests"
         value={config.failureRate}
         onChange={(failureRate) => set({ failureRate })}
       />
-      <label>
+      <label className={LABEL}>
         Failure type{' '}
         <select
+          className="field"
           value={mixKey}
           onChange={(event) => set({ failureMix: FAILURE_MIXES[event.target.value]!.mix })}
         >
@@ -84,7 +109,7 @@ function SimulatorControls() {
           ))}
         </select>
       </label>
-      <div className="sim-row">
+      <div className="flex flex-wrap gap-2">
         <Millis
           label="Latency min"
           value={config.latencyMinMs}
@@ -96,20 +121,22 @@ function SimulatorControls() {
           onChange={(latencyMaxMs) => set({ latencyMaxMs })}
         />
       </div>
-      <label>
+      <label className={CHECK}>
         <input
           type="checkbox"
+          className="accent-accent"
           checked={config.offline}
           onChange={(event) => set({ offline: event.target.checked })}
         />{' '}
         Offline (every request fails; teammates' updates wait)
       </label>
 
-      <h2>Teammates</h2>
-      <label>
+      <h2 className={HEADING}>Teammates</h2>
+      <label className={LABEL}>
         Edits per second: {config.teammateRate}
         <input
           type="range"
+          className="w-full accent-accent"
           min={0}
           max={10}
           step={0.5}
@@ -117,17 +144,19 @@ function SimulatorControls() {
           onChange={(event) => set({ teammateRate: Number(event.target.value) })}
         />
       </label>
-      <label>
+      <label className={CHECK}>
         <input
           type="checkbox"
+          className="accent-accent"
           checked={config.teammatesPaused}
           onChange={(event) => set({ teammatesPaused: event.target.checked })}
         />{' '}
         Paused
       </label>
-      <label>
+      <label className={CHECK}>
         <input
           type="checkbox"
+          className="accent-accent"
           checked={config.targetVisibleRows}
           onChange={(event) => set({ targetVisibleRows: event.target.checked })}
         />{' '}
@@ -138,15 +167,23 @@ function SimulatorControls() {
         value={config.conflictRate}
         onChange={(conflictRate) => set({ conflictRate })}
       />
-      <button type="button" onClick={() => simulator.teammates.editDeal()}>
+      <button
+        type="button"
+        className="btn self-start"
+        onClick={() => simulator.teammates.editDeal()}
+      >
         One teammate edit now
       </button>
 
-      <div className="sim-row">
-        <button type="button" onClick={() => set(DEMO_SETTINGS)}>
+      <div className="flex flex-wrap gap-2">
+        <button type="button" className="btn btn-primary" onClick={() => set(DEMO_SETTINGS)}>
           Demo settings
         </button>
-        <button type="button" onClick={() => simulator.config.setState(DEFAULT_SIM_CONFIG)}>
+        <button
+          type="button"
+          className="btn"
+          onClick={() => simulator.config.setState(DEFAULT_SIM_CONFIG)}
+        >
           Reset
         </button>
       </div>
@@ -167,10 +204,11 @@ function Percent({
   onChange: (value: number) => void;
 }) {
   return (
-    <label>
+    <label className={LABEL}>
       {label}: {Math.round(value * 100)}%
       <input
         type="range"
+        className="w-full accent-accent"
         min={0}
         max={100}
         step={5}
@@ -191,10 +229,11 @@ function Millis({
   onChange: (value: number) => void;
 }) {
   return (
-    <label>
+    <label className={LABEL}>
       {label}{' '}
       <input
         type="number"
+        className="field w-20"
         min={0}
         step={100}
         value={value}

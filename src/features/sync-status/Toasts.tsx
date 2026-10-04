@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
+import { cx } from '../../cx';
 import { usePipeline } from '../../services';
 import type { Toast } from '../../sync/store';
-import './Toasts.css';
 
 const DISMISS_AFTER_MS = { info: 5_000, error: 10_000 };
 
@@ -9,7 +9,11 @@ const DISMISS_AFTER_MS = { info: 5_000, error: 10_000 };
 export function Toasts() {
   const toasts = usePipeline((state) => state.toasts);
   return (
-    <div className="toasts" role="status" aria-live="polite">
+    <div
+      className="fixed right-4 bottom-4 z-20 flex max-w-[min(420px,calc(100vw-32px))] flex-col gap-2"
+      role="status"
+      aria-live="polite"
+    >
       {toasts.map((toast) => (
         <ToastItem key={toast.id} toast={toast} />
       ))}
@@ -26,11 +30,17 @@ function ToastItem({ toast }: { toast: Toast }) {
   }, [toast, dismiss]);
 
   return (
-    <div className={`toast toast-${toast.tone}`}>
-      <span>{toast.message}</span>
+    <div
+      className={cx(
+        'flex items-center gap-2 rounded-lg px-3 py-2.5 text-white shadow-lg',
+        toast.tone === 'error' ? 'bg-red-700' : 'bg-slate-900',
+      )}
+    >
+      <span className="flex-1">{toast.message}</span>
       {toast.action && (
         <button
           type="button"
+          className="btn btn-inverse"
           onClick={() => {
             toast.action?.run();
             dismiss(toast.id);
@@ -39,7 +49,12 @@ function ToastItem({ toast }: { toast: Toast }) {
           {toast.action.label}
         </button>
       )}
-      <button type="button" aria-label="Dismiss" onClick={() => dismiss(toast.id)}>
+      <button
+        type="button"
+        className="cursor-pointer rounded px-1.5 text-white/70 hover:text-white"
+        aria-label="Dismiss"
+        onClick={() => dismiss(toast.id)}
+      >
         ×
       </button>
     </div>

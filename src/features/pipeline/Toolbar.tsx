@@ -11,9 +11,13 @@ import {
 } from '../../domain/query';
 import { usePipeline, useServices } from '../../services';
 import { focusResults, SEARCH_INPUT_ID } from '../keyboard/focus';
-import './Toolbar.css';
 
 const SEARCH_DEBOUNCE_MS = 150;
+
+const SEGMENTED = 'inline-flex rounded-lg border border-line bg-white p-0.5 shadow-xs';
+const SEGMENT =
+  'cursor-pointer rounded-md px-2.5 py-1 font-medium text-muted hover:text-ink aria-pressed:bg-accent-soft aria-pressed:text-accent';
+const LABEL = 'flex items-center gap-1.5 text-muted';
 
 export function Toolbar() {
   const query = usePipeline((state) => state.query);
@@ -24,10 +28,11 @@ export function Toolbar() {
   const setOverlay = usePipeline((state) => state.setOverlay);
 
   return (
-    <div className="toolbar">
-      <div role="group" aria-label="Layout" className="toolbar-group">
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+      <div role="group" aria-label="Layout" className={SEGMENTED}>
         <button
           type="button"
+          className={SEGMENT}
           aria-pressed={viewMode === 'board'}
           onClick={() => setViewMode('board')}
         >
@@ -35,6 +40,7 @@ export function Toolbar() {
         </button>
         <button
           type="button"
+          className={SEGMENT}
           aria-pressed={viewMode === 'list'}
           onClick={() => setViewMode('list')}
         >
@@ -42,9 +48,10 @@ export function Toolbar() {
         </button>
       </div>
 
-      <div role="group" aria-label="Views" className="toolbar-group">
+      <div role="group" aria-label="Views" className={SEGMENTED}>
         <button
           type="button"
+          className={SEGMENT}
           aria-pressed={matchesPreset(query, NEEDS_ATTENTION)}
           onClick={() => setQuery(NEEDS_ATTENTION)}
         >
@@ -52,6 +59,7 @@ export function Toolbar() {
         </button>
         <button
           type="button"
+          className={SEGMENT}
           aria-pressed={matchesPreset(query, ALL_DEALS)}
           onClick={() => setQuery(ALL_DEALS)}
         >
@@ -61,9 +69,10 @@ export function Toolbar() {
 
       <SearchBox />
 
-      <label>
+      <label className={LABEL}>
         Owner{' '}
         <select
+          className="field"
           value={query.owner}
           onChange={(event) => setQuery({ owner: event.target.value as Query['owner'] })}
         >
@@ -72,9 +81,10 @@ export function Toolbar() {
         </select>
       </label>
 
-      <label>
+      <label className={LABEL}>
         Sort{' '}
         <select
+          className="field"
           value={query.sort}
           onChange={(event) => setQuery({ sort: event.target.value as SortKey })}
         >
@@ -86,9 +96,10 @@ export function Toolbar() {
         </select>
       </label>
 
-      <label>
+      <label className="flex cursor-pointer items-center gap-1.5">
         <input
           type="checkbox"
+          className="size-4 accent-accent"
           checked={query.overdueOnly}
           onChange={(event) => setQuery({ overdueOnly: event.target.checked })}
         />{' '}
@@ -97,7 +108,12 @@ export function Toolbar() {
 
       <span className="muted">{formatCount(resultCount)} deals</span>
 
-      <button type="button" aria-keyshortcuts="?" onClick={() => setOverlay('help')}>
+      <button
+        type="button"
+        className="btn ml-auto"
+        aria-keyshortcuts="?"
+        onClick={() => setOverlay('help')}
+      >
         Shortcuts <kbd>?</kbd>
       </button>
     </div>
@@ -125,6 +141,7 @@ function SearchBox() {
       aria-label="Search deals"
       aria-keyshortcuts="/"
       placeholder="Search company, owner or ID"
+      className="field w-64 py-1.5"
       value={text}
       onChange={(event) => setText(event.target.value)}
       onKeyDown={(event) => {

@@ -16,7 +16,6 @@ import { useStageSummary } from '../pipeline/useStageSummary';
 import { BoardColumn, columnDomId } from './BoardColumn';
 import { requestMove } from '../selection/requestMove';
 import { DealCardPreview } from './DealCard';
-import './BoardView.css';
 
 const SCREEN_READER_INSTRUCTIONS = {
   draggable:
@@ -85,7 +84,12 @@ export function BoardView() {
       onDragEnd={onDragEnd}
       onDragCancel={() => setDraggingId(null)}
     >
-      <div ref={boardRef} className="board" role="region" aria-label="Pipeline board">
+      <div
+        ref={boardRef}
+        className="flex min-h-0 flex-1 gap-3 overflow-x-auto pb-1"
+        role="region"
+        aria-label="Pipeline board"
+      >
         {STAGES.map((stage) => (
           <BoardColumn
             key={stage}

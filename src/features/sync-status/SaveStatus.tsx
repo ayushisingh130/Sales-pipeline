@@ -1,6 +1,8 @@
 import { usePipeline, useServices } from '../../services';
 import { MAX_ATTEMPTS } from '../../sync/retry';
-import './SaveStatus.css';
+
+const SAVING = 'shrink-0 text-xs text-muted';
+const PROBLEM = 'shrink-0 text-xs font-semibold text-danger';
 
 /** Save state of one deal. Shared by table rows and board cards. */
 export function SaveStatus({ id }: { id: string }) {
@@ -10,26 +12,31 @@ export function SaveStatus({ id }: { id: string }) {
 
   switch (change.status) {
     case 'saving':
-      return <span className="save-status is-saving">Saving…</span>;
+      return <span className={SAVING}>Saving…</span>;
     case 'retrying':
       return (
-        <span className="save-status is-saving" title={change.error}>
+        <span className={SAVING} title={change.error}>
           Retrying ({change.attempts + 1}/{MAX_ATTEMPTS})…
         </span>
       );
     case 'failed':
       return (
-        <span className="save-status is-failed" title={change.error}>
+        <span className={PROBLEM} title={change.error}>
           Not saved{' '}
           {/* Mouse shortcut only; keyboard users get Retry in the Unsaved changes panel. */}
-          <button type="button" tabIndex={-1} onClick={() => mutations.retry(id)}>
+          <button
+            type="button"
+            className="cursor-pointer rounded border border-red-200 bg-red-50 px-1.5 leading-tight hover:bg-red-100"
+            tabIndex={-1}
+            onClick={() => mutations.retry(id)}
+          >
             Retry
           </button>
         </span>
       );
     case 'conflict':
       return (
-        <span className="save-status is-conflict" title={change.error}>
+        <span className={PROBLEM} title={change.error}>
           Conflict
         </span>
       );

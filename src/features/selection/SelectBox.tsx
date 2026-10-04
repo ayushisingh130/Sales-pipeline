@@ -1,7 +1,6 @@
 import type { MouseEvent } from 'react';
 import { usePipeline } from '../../services';
 import type { PipelineStore } from '../../sync/store';
-import './SelectBox.css';
 
 /**
  * A card's or row's checkbox. Mouse only (tabIndex -1): keyboard users press Space. It stops the
@@ -13,7 +12,7 @@ export function SelectBox({ id, label }: { id: string; label: string }) {
   return (
     <input
       type="checkbox"
-      className="select-box"
+      className="mr-1.5 size-3.5 cursor-pointer align-middle accent-accent"
       tabIndex={-1}
       aria-label={`Select ${label}`}
       checked={selected}

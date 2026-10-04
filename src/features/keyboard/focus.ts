@@ -4,7 +4,7 @@ export const SEARCH_INPUT_ID = 'deal-search';
 
 /** Back to the deals: the List view's grid, or the board column that holds the focused card. */
 export function focusResults() {
-  document.querySelector<HTMLElement>('.deal-grid, .column-scroller[tabindex="0"]')?.focus();
+  document.querySelector<HTMLElement>('[role="grid"], [role="listbox"][tabindex="0"]')?.focus();
 }
 
 export function focusSearch() {

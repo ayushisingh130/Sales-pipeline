@@ -1,6 +1,5 @@
 import { useRef, type KeyboardEvent, type ReactNode } from 'react';
 import { useFocusWhileMounted } from './focus';
-import './Modal.css';
 
 interface ModalProps {
   labelledBy: string;
@@ -32,7 +31,7 @@ export function Modal({ labelledBy, onClose, children }: ModalProps) {
 
   return (
     <div
-      className="modal-backdrop"
+      className="fixed inset-0 z-30 grid place-items-center bg-slate-900/40"
       onMouseDown={(event) => event.target === event.currentTarget && onClose()}
     >
       <div
@@ -41,7 +40,7 @@ export function Modal({ labelledBy, onClose, children }: ModalProps) {
         aria-modal="true"
         aria-labelledby={labelledBy}
         tabIndex={-1}
-        className="modal"
+        className="w-[min(440px,calc(100vw-32px))] rounded-xl bg-white p-5 shadow-2xl ring-1 ring-black/5 [&_h2]:mb-2 [&_h2]:text-base [&_h2]:font-semibold"
         onKeyDown={onKeyDown}
       >
         {children}

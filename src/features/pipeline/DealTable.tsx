@@ -2,8 +2,8 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 import { useEffect, useMemo, useRef } from 'react';
 import { usePipeline } from '../../services';
 import { useGridKeyboard } from '../keyboard/useGridKeyboard';
-import { DealRow, ROW_HEIGHT, rowDomId } from './DealRow';
-import './DealTable.css';
+import { cx } from '../../cx';
+import { DealRow, ROW_GRID, ROW_HEIGHT, rowDomId } from './DealRow';
 
 const COLUMNS = [
   'Select',
@@ -57,23 +57,34 @@ export function DealTable() {
       aria-multiselectable="true"
       aria-activedescendant={focusedIndex >= 0 && focusedId ? rowDomId(focusedId) : undefined}
       tabIndex={0}
-      className="deal-grid"
+      className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-line bg-white shadow-xs"
       onKeyDown={onKeyDown}
     >
-      <div role="row" aria-rowindex={1} className="deal-row deal-header">
+      <div
+        role="row"
+        aria-rowindex={1}
+        className={cx(
+          ROW_GRID,
+          'flex-none border-line bg-surface text-xs font-semibold tracking-wide text-muted uppercase',
+        )}
+      >
         {COLUMNS.map((column) => (
-          <div key={column} role="columnheader" className="cell">
-            {column === 'Select' ? <span className="visually-hidden">{column}</span> : column}
+          <div key={column} role="columnheader" className="truncate">
+            {column === 'Select' ? <span className="sr-only">{column}</span> : column}
           </div>
         ))}
       </div>
 
       {ids.length === 0 ? (
-        <p className="empty">No deals match these filters.</p>
+        <p className="p-4 text-muted">No deals match these filters.</p>
       ) : (
         // tabIndex -1: browsers make scrollable areas tabbable; the grid is the only tab stop.
-        <div ref={scrollRef} className="deal-scroller" tabIndex={-1}>
-          <div role="rowgroup" className="deal-body" style={{ height: virtualizer.getTotalSize() }}>
+        <div
+          ref={scrollRef}
+          className="min-h-0 flex-1 overflow-auto focus:outline-none"
+          tabIndex={-1}
+        >
+          <div role="rowgroup" className="relative" style={{ height: virtualizer.getTotalSize() }}>
             {virtualizer.getVirtualItems().map((item) => {
               const id = ids[item.index];
               return id && <DealRow key={id} id={id} index={item.index} top={item.start} />;

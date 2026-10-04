@@ -2,7 +2,6 @@
 
 > A shared sales pipeline for a team, with 50,000 deals, a flaky network and teammates editing at the same time.
 
-
 ### Table of Contents
 
 - [Description](#description)
@@ -13,8 +12,7 @@
 - [Simulator](#simulator)
 - [Folder Structure](#folder-structure)
 - [Testing](#testing)
-- [Demo Link](#demo-link)
-- [Author Info](#author-info)
+- [Deployed Link](#deployed-link)
 
 The design decisions, trade-offs and known limitations are explained in [WRITEUP.md](WRITEUP.md).
 
@@ -38,6 +36,7 @@ There's no real backend. A fake API inside the app simulates latency, failed sav
 - Zustand (state and sync)
 - TanStack Virtual (virtualized lists)
 - dnd-kit (drag and drop)
+- Tailwind CSS v4 (styling)
 - Vite
 - Vitest + React Testing Library
 
@@ -62,15 +61,15 @@ npm run dev
 
 Other scripts:
 
-| Script          | What it does                                                  |
-| --------------- | ------------------------------------------------------------- |
-| `npm run build` | Production build                                              |
-| `npm run check` | Type check, lint, format check and tests (everything CI runs) |
+| Script          | What it does                                            |
+| --------------- | ------------------------------------------------------- |
+| `npm run build` | Production build                                        |
+| `npm run check` | Type check, lint, format check and tests, all in one go |
 
 ## Try it in two minutes
 
 1. Press <kbd>`</kbd> (or click **Simulator**) and choose **Demo settings**. This makes 40% of saves fail, has teammates make 5 edits a second on the deals you can see, and makes some saves conflict with a teammate.
-2. Drag a card to the next column. It moves right away and shows **Saving…**. If the save fails it retries up to 3 times. If it still fails, the card stays where you put it, marked **Not saved**, and the header shows **N unsaved**. Click that (or press <kbd>u</kbd>) to retry, discard or resolve a conflict.
+2. Drag a card to the next column. It moves right away and shows **Saving…**. If the save fails, it's tried up to 3 times in total. If it still fails, the card stays where you put it, marked **Not saved**, and the header shows **N unsaved**. Click that (or press <kbd>u</kbd>) to retry, discard or resolve a conflict.
 3. Watch what teammates change. Values update in place with a short highlight. If a teammate moves a deal, it stays where it is but is dimmed ("Moved to Won by Rahul"), and a banner counts these. Press <kbd>r</kbd> to apply them.
 4. Try it without the mouse. Click a column once, then use the arrow keys, <kbd>]</kbd> to move a deal forward, <kbd>m</kbd> to pick a stage and <kbd>z</kbd> to undo. Press <kbd>?</kbd> to see every shortcut.
 5. Try a bulk move. Switch to **All deals**, click **Select all** on Negotiation, then drag one of the selected cards to Lost (or press <kbd>7</kbd>). Confirm it, then watch the jobs panel for progress, failures, **Retry failed** and **Cancel**.

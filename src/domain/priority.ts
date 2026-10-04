@@ -17,7 +17,7 @@ export const HIGH_VALUE_INR = 30_00_000;
 
 /**
  * Why an open deal needs attention, most urgent first. The score is the sum of the weights,
- * so the order in the list can always be explained by the chips shown on the row.
+ * so the order in the list can always be explained by the reasons shown on the card or row.
  */
 export function attentionReasons(deal: Deal, now: number): AttentionReason[] {
   if (isClosed(deal.stage)) return [];

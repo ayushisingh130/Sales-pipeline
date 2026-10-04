@@ -1,6 +1,5 @@
 import { usePipeline, useServices } from '../../services';
 import { Modal } from './Modal';
-import './ShortcutHelp.css';
 
 const SHORTCUTS: [keys: string, action: string][] = [
   ['↑ ↓ or j k', 'Previous / next deal'],
@@ -31,9 +30,9 @@ export function ShortcutHelp() {
     <Modal labelledBy="shortcut-help-title" onClose={close}>
       <h2 id="shortcut-help-title">Keyboard shortcuts</h2>
       <p className="muted">These work while the board or list has focus. Dragging is optional.</p>
-      <dl className="shortcut-list">
+      <dl className="mt-3 grid max-h-[60vh] gap-1.5 overflow-auto">
         {SHORTCUTS.map(([keys, action]) => (
-          <div key={keys}>
+          <div key={keys} className="grid grid-cols-[11em_1fr] gap-2">
             <dt>
               <kbd>{keys}</kbd>
             </dt>
@@ -41,8 +40,8 @@ export function ShortcutHelp() {
           </div>
         ))}
       </dl>
-      <div className="modal-actions">
-        <button type="button" data-autofocus onClick={close}>
+      <div className="mt-4 flex justify-end gap-2">
+        <button type="button" className="btn" data-autofocus onClick={close}>
           Close
         </button>
       </div>

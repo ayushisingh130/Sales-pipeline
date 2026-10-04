@@ -2,7 +2,6 @@ import type { Deal } from '../../api/types';
 import { STAGE_LABELS } from '../../domain/stages';
 import { usePipeline } from '../../services';
 import { isOutOfPlace } from '../../sync/store';
-import './RemoteChange.css';
 
 /** Whether a teammate's change has left this deal out of place in the frozen view. */
 export function useOutOfPlace(id: string): boolean {
@@ -22,5 +21,11 @@ export function outOfPlaceNote(deal: Deal, listedStage: string | undefined): str
  */
 export function RemoteFlash({ id }: { id: string }) {
   const changedAt = usePipeline((state) => state.remoteChanges.get(id));
-  return changedAt ? <span key={changedAt} className="remote-flash" aria-hidden="true" /> : null;
+  return changedAt ? (
+    <span
+      key={changedAt}
+      className="pointer-events-none absolute inset-0 animate-remote-flash rounded-[inherit] bg-amber-100 motion-reduce:animate-none motion-reduce:opacity-0"
+      aria-hidden="true"
+    />
+  ) : null;
 }

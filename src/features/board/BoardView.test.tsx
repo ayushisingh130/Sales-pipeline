@@ -13,7 +13,7 @@ const COLUMN_WIDTH = 220;
 /** jsdom has no layout: give each column a side-by-side position so drops can be hit-tested. */
 function mockColumnRects() {
   vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(function (this: Element) {
-    const column = this.closest('.board-column');
+    const column = this.closest('[data-stage]');
     const index = column ? Array.from(column.parentElement!.children).indexOf(column) : 0;
     return DOMRect.fromRect({
       x: index * COLUMN_WIDTH,

@@ -28,11 +28,16 @@ export function ConfirmMoveDialog() {
       <p className="muted">
         They move right away and save in the background. You can keep working while they do.
       </p>
-      <div className="modal-actions">
-        <button type="button" data-autofocus onClick={() => confirmMove(services)}>
+      <div className="mt-4 flex justify-end gap-2">
+        <button
+          type="button"
+          className="btn btn-primary"
+          data-autofocus
+          onClick={() => confirmMove(services)}
+        >
           Move {count} deals
         </button>
-        <button type="button" onClick={cancel}>
+        <button type="button" className="btn" onClick={cancel}>
           Cancel
         </button>
       </div>

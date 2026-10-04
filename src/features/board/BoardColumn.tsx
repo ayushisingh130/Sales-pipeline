@@ -4,12 +4,23 @@ import { memo, useEffect, useMemo, useRef } from 'react';
 import { formatCount, formatInrCompact } from '../../domain/format';
 import type { StageSummary } from '../../domain/query';
 import { STAGE_LABELS, type Stage } from '../../domain/stages';
+import { cx } from '../../cx';
 import { usePipeline } from '../../services';
 import { cardDomId, CARD_SLOT_HEIGHT, DealCard } from './DealCard';
 import { useBoardKeyboard } from './useBoardKeyboard';
-import './BoardColumn.css';
 
 export const columnDomId = (stage: Stage) => `board-column-${stage}`;
+
+/** A colour per stage, on the column's top edge, so the funnel reads left to right at a glance. */
+const STAGE_ACCENT: Record<Stage, string> = {
+  new_lead: 'border-t-sky-400',
+  contacted: 'border-t-cyan-400',
+  demo_done: 'border-t-teal-400',
+  proposal_sent: 'border-t-indigo-400',
+  negotiation: 'border-t-violet-400',
+  won: 'border-t-emerald-500',
+  lost: 'border-t-rose-400',
+};
 
 interface BoardColumnProps {
   stage: Stage;
@@ -60,10 +71,18 @@ export const BoardColumn = memo(function BoardColumn({
   const headingId = `${columnDomId(stage)}-heading`;
 
   return (
-    <section ref={setNodeRef} className={isOver ? 'board-column is-over' : 'board-column'}>
-      <header id={headingId} className="column-header">
-        <div className="column-title">
-          <h2>{STAGE_LABELS[stage]}</h2>
+    <section
+      ref={setNodeRef}
+      data-stage={stage}
+      className={cx(
+        'flex min-h-0 min-w-[210px] flex-[1_0_210px] flex-col rounded-xl border border-t-4 border-line bg-slate-100/70 transition-colors',
+        STAGE_ACCENT[stage],
+        isOver && 'border-accent bg-accent-soft ring-2 ring-accent',
+      )}
+    >
+      <header id={headingId} className="flex flex-col gap-0.5 px-3 pt-2.5 pb-2">
+        <div className="flex items-baseline justify-between">
+          <h2 className="text-sm font-semibold">{STAGE_LABELS[stage]}</h2>
           {ids.length > 0 && (
             <button
               type="button"
@@ -87,13 +106,13 @@ export const BoardColumn = memo(function BoardColumn({
         aria-multiselectable="true"
         aria-activedescendant={focusedIndex >= 0 && focusedId ? cardDomId(focusedId) : undefined}
         tabIndex={tabbable ? 0 : -1}
-        className="column-scroller"
+        className="min-h-0 flex-1 overflow-y-auto px-2 focus-visible:-outline-offset-2"
         onKeyDown={onKeyDown}
       >
         {ids.length === 0 ? (
-          <p className="column-empty">No deals</p>
+          <p className="my-4 text-center text-muted">No deals</p>
         ) : (
-          <div className="column-body" style={{ height: virtualizer.getTotalSize() }}>
+          <div className="relative" style={{ height: virtualizer.getTotalSize() }}>
             {virtualizer.getVirtualItems().map((item) => {
               const id = ids[item.index];
               return id && <DealCard key={id} id={id} top={item.start} />;

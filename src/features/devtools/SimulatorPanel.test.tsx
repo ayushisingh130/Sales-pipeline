@@ -20,4 +20,20 @@ describe('SimulatorPanel', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Retry' }));
     expect(await screen.findByRole('region', { name: 'Pipeline board' })).toBeInTheDocument();
   });
+
+  it('closes with × or Esc and returns focus to the Simulator button', async () => {
+    render(<App services={createTestServices()} />);
+    const toggle = screen.getByRole('button', { name: /Simulator/ });
+
+    await userEvent.click(toggle);
+    await userEvent.click(screen.getByRole('button', { name: 'Close simulator' }));
+    expect(screen.queryByRole('region', { name: 'Simulator' })).not.toBeInTheDocument();
+    expect(toggle).toHaveFocus();
+
+    await userEvent.click(toggle);
+    await userEvent.click(screen.getByRole('slider', { name: /Failed requests/ }));
+    await userEvent.keyboard('{Escape}');
+    expect(screen.queryByRole('region', { name: 'Simulator' })).not.toBeInTheDocument();
+    expect(toggle).toHaveFocus();
+  });
 });

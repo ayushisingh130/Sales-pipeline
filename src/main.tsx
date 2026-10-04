@@ -1,4 +1,4 @@
-// Global styles first, so each component's own CSS (imported by the component) comes after it.
+// Tailwind and the shared design tokens; components style themselves with utility classes.
 import './styles.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';

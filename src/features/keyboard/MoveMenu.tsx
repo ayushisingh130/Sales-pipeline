@@ -4,7 +4,6 @@ import { nextStage, STAGE_LABELS, STAGES, type Stage } from '../../domain/stages
 import { useDeal, usePipeline, useServices } from '../../services';
 import { requestMove } from '../selection/requestMove';
 import { Modal } from './Modal';
-import './MoveMenu.css';
 
 const optionDomId = (stage: Stage) => `move-option-${stage}`;
 
@@ -77,7 +76,7 @@ function MoveMenuDialog() {
         aria-autocomplete="list"
         aria-activedescendant={activeStage ? optionDomId(activeStage) : undefined}
         placeholder="Type a stage or 1–7"
-        className="move-input"
+        className="field mt-1 mb-2 w-full py-1.5"
         value={text}
         onChange={(event) => {
           setText(event.target.value);
@@ -85,14 +84,14 @@ function MoveMenuDialog() {
         }}
         onKeyDown={onKeyDown}
       />
-      <ul id="move-options" role="listbox" aria-label="Stages" className="move-options">
+      <ul id="move-options" role="listbox" aria-label="Stages" className="flex flex-col gap-0.5">
         {options.map(({ stage, key }) => (
           <li
             key={stage}
             id={optionDomId(stage)}
             role="option"
             aria-selected={stage === activeStage}
-            className={stage === activeStage ? 'is-active' : undefined}
+            className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 hover:bg-surface aria-selected:bg-accent-soft aria-selected:text-accent aria-selected:ring-2 aria-selected:ring-accent aria-selected:ring-inset"
             onClick={() => choose(stage)}
           >
             <kbd>{key}</kbd> {STAGE_LABELS[stage]}

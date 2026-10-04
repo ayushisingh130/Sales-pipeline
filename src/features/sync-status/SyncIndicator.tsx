@@ -4,7 +4,6 @@ import { STAGE_LABELS } from '../../domain/stages';
 import { usePipeline, useServices } from '../../services';
 import { needsUser } from '../../sync/store';
 import { useFocusWhileMounted } from '../keyboard/focus';
-import './SyncIndicator.css';
 
 /**
  * "All changes saved" / "Saving 2 changes…" / "3 unsaved", which opens the Unsaved changes panel.
@@ -33,15 +32,15 @@ export function SyncIndicator() {
   const savingText = `Saving ${saving} change${saving === 1 ? '' : 's'}…`;
   if (unsaved === 0) {
     return (
-      <span className="sync-indicator">{saving > 0 ? savingText : '✓ All changes saved'}</span>
+      <span className="ml-auto text-muted">{saving > 0 ? savingText : '✓ All changes saved'}</span>
     );
   }
 
   return (
-    <div className="sync-indicator-wrap">
+    <div className="relative ml-auto">
       <button
         type="button"
-        className="sync-indicator is-unsaved"
+        className="btn border-red-200 bg-red-50 font-semibold text-danger hover:bg-red-100"
         aria-expanded={open}
         aria-controls="unsaved-panel"
         onClick={() => setOverlay(open ? null : 'unsaved')}
@@ -70,19 +69,19 @@ function UnsavedPanel({ onClose }: { onClose: () => void }) {
       ref={panelRef}
       id="unsaved-panel"
       aria-label="Unsaved changes"
-      className="unsaved-panel"
+      className="popover absolute top-[calc(100%+6px)] right-0 z-10 max-h-[60vh] w-[min(520px,90vw)] overflow-auto p-3"
       tabIndex={-1}
       onKeyDown={(event) => event.key === 'Escape' && onClose()}
     >
-      <header>
+      <header className="mb-2 flex items-center justify-between">
         <strong>Unsaved changes</strong>
         {failedIds.length > 1 && (
-          <button type="button" onClick={() => failedIds.forEach(mutations.retry)}>
+          <button type="button" className="btn" onClick={() => failedIds.forEach(mutations.retry)}>
             Retry all
           </button>
         )}
       </header>
-      <ul>
+      <ul className="divide-y divide-slate-100 border-t border-slate-100">
         {ids.map((id) => (
           <UnsavedItem key={id} id={id} />
         ))}
@@ -90,6 +89,8 @@ function UnsavedPanel({ onClose }: { onClose: () => void }) {
     </section>
   );
 }
+
+const ITEM = 'flex flex-wrap items-center gap-1.5 py-2';
 
 function UnsavedItem({ id }: { id: string }) {
   const deal = usePipeline((state) => state.server.get(id));
@@ -100,15 +101,15 @@ function UnsavedItem({ id }: { id: string }) {
 
   if (change.status === 'conflict') {
     return (
-      <li>
-        <span>
+      <li className={ITEM}>
+        <span className="basis-full">
           <strong>{deal.company}</strong>: you moved it to {target}, but {deal.updatedBy} changed it
           first (now {STAGE_LABELS[deal.stage]}).
         </span>
-        <button type="button" onClick={() => mutations.keepTheirs(id)}>
+        <button type="button" className="btn" onClick={() => mutations.keepTheirs(id)}>
           Keep theirs
         </button>
-        <button type="button" onClick={() => mutations.applyMine(id)}>
+        <button type="button" className="btn" onClick={() => mutations.applyMine(id)}>
           Apply mine
         </button>
       </li>
@@ -116,15 +117,15 @@ function UnsavedItem({ id }: { id: string }) {
   }
 
   return (
-    <li>
-      <span>
+    <li className={ITEM}>
+      <span className="basis-full">
         <strong>{deal.company}</strong>: {STAGE_LABELS[deal.stage]} → {target}{' '}
         <span className="muted">({change.error})</span>
       </span>
-      <button type="button" onClick={() => mutations.retry(id)}>
+      <button type="button" className="btn" onClick={() => mutations.retry(id)}>
         Retry
       </button>
-      <button type="button" onClick={() => mutations.discard(id)}>
+      <button type="button" className="btn" onClick={() => mutations.discard(id)}>
         Discard
       </button>
     </li>

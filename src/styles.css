@@ -1,110 +1,81 @@
-:root {
-  --text: #1f2328;
-  --muted: #656d76;
-  --border: #d0d7de;
-  --surface: #f6f8fa;
-  --accent: #0969da;
-  --accent-soft: #ddf4ff;
-  font-family:
-    system-ui,
-    -apple-system,
-    'Segoe UI',
-    sans-serif;
-  font-size: 14px;
-  color: var(--text);
-  background: #fff;
+@import 'tailwindcss';
+
+/* Design tokens. Tailwind turns each --color-* into utilities: bg-accent, text-muted, border-line… */
+@theme {
+  --color-ink: var(--color-slate-900);
+  --color-muted: var(--color-slate-500);
+  --color-line: var(--color-slate-200);
+  --color-surface: var(--color-slate-50);
+  --color-accent: var(--color-indigo-600);
+  --color-accent-soft: var(--color-indigo-50);
+  --color-danger: var(--color-red-700);
+  --animate-remote-flash: remote-flash 2s ease-out forwards;
+
+  @keyframes remote-flash {
+    from {
+      opacity: 0.9;
+    }
+    to {
+      opacity: 0;
+    }
+  }
 }
 
-* {
-  box-sizing: border-box;
+@layer base {
+  html,
+  body,
+  #root {
+    @apply h-full;
+  }
+
+  body {
+    @apply bg-surface text-sm text-ink antialiased;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent;
+  }
+
+  kbd {
+    @apply rounded border border-b-2 border-line bg-white px-1 font-mono text-xs text-muted;
+  }
 }
 
-html,
-body,
-#root {
-  height: 100%;
-  margin: 0;
-}
+/*
+ * The few primitives used across many components. Native elements keep their semantics; these
+ * only give them a look, so a component reads `className="btn"` instead of a dozen utilities.
+ */
+@layer components {
+  .btn {
+    @apply inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-line bg-white px-2.5 py-1 font-medium whitespace-nowrap text-ink shadow-xs transition-colors hover:bg-surface disabled:cursor-not-allowed disabled:opacity-50 aria-pressed:border-accent aria-pressed:bg-accent-soft aria-pressed:text-accent;
+  }
 
-button,
-input,
-select {
-  font: inherit;
-}
+  .btn-primary {
+    @apply border-accent bg-accent text-white hover:bg-indigo-700;
+  }
 
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
+  /* For buttons on a dark surface (bulk bar, toasts). */
+  .btn-inverse {
+    @apply border-white/20 bg-white/10 text-white shadow-none hover:bg-white/20;
+  }
 
-h1 {
-  margin: 0;
-  font-size: 18px;
-}
+  .field {
+    @apply rounded-md border border-line bg-white px-2 py-1 text-ink shadow-xs;
+  }
 
-button[aria-pressed='true'] {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-}
+  .link-button {
+    @apply cursor-pointer text-xs font-medium text-accent hover:underline;
+  }
 
-.muted {
-  color: var(--muted);
-  font-size: 12px;
-}
+  .muted {
+    @apply text-xs text-muted;
+  }
 
-.num {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
+  .num {
+    @apply text-right tabular-nums;
+  }
 
-.chip {
-  display: inline-block;
-  margin-right: 4px;
-  padding: 1px 6px;
-  border-radius: 10px;
-  font-size: 12px;
-  background: #eaeef2;
-}
-
-.chip-overdue {
-  background: #ffebe9;
-  color: #a40e26;
-}
-
-.chip-closing_soon {
-  background: #fff8c5;
-  color: #7d4e00;
-}
-
-.chip-stale {
-  background: #fbefff;
-  color: #6639ba;
-}
-
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
-.link-button {
-  padding: 0;
-  border: 0;
-  color: var(--accent);
-  background: none;
-  font-size: 12px;
-  cursor: pointer;
-}
-
-kbd {
-  padding: 0 4px;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  background: var(--surface);
-  font:
-    12px ui-monospace,
-    monospace;
+  .popover {
+    @apply rounded-lg border border-line bg-white shadow-lg;
+  }
 }
