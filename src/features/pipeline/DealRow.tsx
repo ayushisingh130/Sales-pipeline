@@ -7,6 +7,7 @@ import { useDeal, usePipeline, useServices } from '../../services';
 import { outOfPlaceNote, RemoteFlash, useOutOfPlace } from '../sync-status/RemoteChange';
 import { SelectBox, selectionClick } from '../selection/SelectBox';
 import { SaveStatus } from '../sync-status/SaveStatus';
+import './DealRow.css';
 
 export const ROW_HEIGHT = 40;
 

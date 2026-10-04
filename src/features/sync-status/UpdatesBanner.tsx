@@ -1,5 +1,6 @@
 import { usePipeline } from '../../services';
 import { countOutOfPlace } from '../../sync/store';
+import './UpdatesBanner.css';
 
 /**
  * "8 updates from teammates — Show (R)". It floats over the content rather than sitting in the

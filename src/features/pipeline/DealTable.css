@@ -1,0 +1,49 @@
+.deal-grid {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.deal-scroller {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+.deal-scroller:focus {
+  outline: none;
+}
+
+.deal-body {
+  position: relative;
+}
+
+.deal-body .deal-row {
+  position: absolute;
+  inset: 0 0 auto;
+}
+
+.deal-row.deal-header {
+  flex: none;
+  font-weight: 600;
+  background: var(--surface);
+  border-bottom-color: var(--border);
+}
+
+.cell {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.cell .muted {
+  margin-left: 6px;
+}
+
+.empty {
+  padding: 16px;
+}

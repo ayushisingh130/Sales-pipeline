@@ -1,3 +1,5 @@
+// Global styles first, so each component's own CSS (imported by the component) comes after it.
+import './styles.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
@@ -5,7 +7,6 @@ import { STAGES } from './domain/stages';
 import { createServices } from './services';
 import { loadDeals } from './sync/load';
 import { startRealtime } from './sync/realtime';
-import './styles.css';
 
 const root = document.getElementById('root');
 if (!root) throw new Error('Root element #root not found');

@@ -4,6 +4,7 @@ import { STAGE_LABELS } from '../../domain/stages';
 import { usePipeline, useServices } from '../../services';
 import { needsUser } from '../../sync/store';
 import { useFocusWhileMounted } from '../keyboard/focus';
+import './SyncIndicator.css';
 
 /**
  * "All changes saved" / "Saving 2 changes…" / "3 unsaved", which opens the Unsaved changes panel.

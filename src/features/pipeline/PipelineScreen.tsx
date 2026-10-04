@@ -14,6 +14,7 @@ import { useUnsavedChangesWarning } from '../sync-status/useUnsavedChangesWarnin
 import { DealTable } from './DealTable';
 import { StageStrip } from './StageStrip';
 import { Toolbar } from './Toolbar';
+import './PipelineScreen.css';
 
 export function PipelineScreen() {
   const load = usePipeline((state) => state.load);

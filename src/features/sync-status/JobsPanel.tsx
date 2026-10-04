@@ -2,6 +2,7 @@ import { formatCount } from '../../domain/format';
 import { STAGE_LABELS } from '../../domain/stages';
 import { usePipeline, useServices } from '../../services';
 import type { BulkJob } from '../../sync/store';
+import './JobsPanel.css';
 
 /** Progress of bulk moves. Bottom-left, out of the way; the rest of the UI stays usable. */
 export function JobsPanel() {

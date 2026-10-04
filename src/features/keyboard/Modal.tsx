@@ -1,5 +1,6 @@
 import { useRef, type KeyboardEvent, type ReactNode } from 'react';
 import { useFocusWhileMounted } from './focus';
+import './Modal.css';
 
 interface ModalProps {
   labelledBy: string;

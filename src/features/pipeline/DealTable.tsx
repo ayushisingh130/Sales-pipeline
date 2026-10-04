@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { usePipeline } from '../../services';
 import { useGridKeyboard } from '../keyboard/useGridKeyboard';
 import { DealRow, ROW_HEIGHT, rowDomId } from './DealRow';
+import './DealTable.css';
 
 const COLUMNS = [
   'Select',

@@ -1,0 +1,33 @@
+.jobs-panel {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(360px, calc(100vw - 32px));
+}
+
+.job {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 12%);
+}
+
+.job progress {
+  display: block;
+  width: 100%;
+  margin: 6px 0 2px;
+}
+
+.job-actions {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}

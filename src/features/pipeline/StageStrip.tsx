@@ -3,6 +3,7 @@ import type { StageFilter } from '../../domain/query';
 import { STAGE_LABELS, STAGES } from '../../domain/stages';
 import { usePipeline } from '../../services';
 import { useStageSummary } from './useStageSummary';
+import './StageStrip.css';
 
 const FILTERS: StageFilter[] = ['all', 'open', ...STAGES];
 const LABELS: Record<StageFilter, string> = { all: 'All', open: 'All open', ...STAGE_LABELS };

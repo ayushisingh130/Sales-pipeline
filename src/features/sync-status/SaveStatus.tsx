@@ -1,5 +1,6 @@
 import { usePipeline, useServices } from '../../services';
 import { MAX_ATTEMPTS } from '../../sync/retry';
+import './SaveStatus.css';
 
 /** Save state of one deal. Shared by table rows and board cards. */
 export function SaveStatus({ id }: { id: string }) {

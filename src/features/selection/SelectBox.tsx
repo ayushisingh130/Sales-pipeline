@@ -1,6 +1,7 @@
 import type { MouseEvent } from 'react';
 import { usePipeline } from '../../services';
 import type { PipelineStore } from '../../sync/store';
+import './SelectBox.css';
 
 /**
  * A card's or row's checkbox. Mouse only (tabIndex -1): keyboard users press Space. It stops the

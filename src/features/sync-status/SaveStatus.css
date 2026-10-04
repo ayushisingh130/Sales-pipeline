@@ -1,0 +1,18 @@
+.save-status {
+  font-size: 12px;
+}
+
+.save-status.is-saving {
+  color: var(--muted);
+}
+
+.save-status.is-failed,
+.save-status.is-conflict {
+  color: #a40e26;
+  font-weight: 600;
+}
+
+.save-status button {
+  padding: 0 6px;
+  font-size: 12px;
+}

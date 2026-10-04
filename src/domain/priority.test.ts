@@ -26,8 +26,8 @@ describe('attentionReasons', () => {
     const soon = makeDeal({ closeDate: NOW + 3 * DAY_MS, lastActivityAt: NOW });
     const later = makeDeal({ closeDate: NOW + 30 * DAY_MS, lastActivityAt: NOW });
 
-    expect(attentionReasons(today, NOW)[0]?.label).toBe('Closes today');
-    expect(attentionReasons(soon, NOW)[0]?.label).toBe('Closes in 3d');
+    expect(attentionReasons(today, NOW)[0]?.label).toBe('Due today');
+    expect(attentionReasons(soon, NOW)[0]?.label).toBe('Due in 3d');
     expect(attentionReasons(later, NOW)).toEqual([]);
   });
 

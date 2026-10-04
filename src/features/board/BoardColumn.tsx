@@ -7,6 +7,7 @@ import { STAGE_LABELS, type Stage } from '../../domain/stages';
 import { usePipeline } from '../../services';
 import { cardDomId, CARD_SLOT_HEIGHT, DealCard } from './DealCard';
 import { useBoardKeyboard } from './useBoardKeyboard';
+import './BoardColumn.css';
 
 export const columnDomId = (stage: Stage) => `board-column-${stage}`;
 

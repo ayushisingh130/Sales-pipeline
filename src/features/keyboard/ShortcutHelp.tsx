@@ -1,5 +1,6 @@
 import { usePipeline, useServices } from '../../services';
 import { Modal } from './Modal';
+import './ShortcutHelp.css';
 
 const SHORTCUTS: [keys: string, action: string][] = [
   ['↑ ↓ or j k', 'Previous / next deal'],

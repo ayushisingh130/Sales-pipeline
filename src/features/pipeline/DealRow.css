@@ -1,0 +1,35 @@
+.deal-row {
+  display: grid;
+  grid-template-columns: 24px minmax(220px, 2fr) 110px 110px 130px 80px minmax(190px, 2fr) 150px;
+  gap: 12px;
+  align-items: center;
+  height: 40px;
+  padding: 0 12px;
+  border-bottom: 1px solid #eaeef2;
+}
+
+.deal-row.is-focused {
+  background: var(--accent-soft);
+  box-shadow: inset 3px 0 var(--accent);
+}
+
+.stage-select {
+  width: 100%;
+  padding: 2px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.stage-select:hover {
+  border-color: var(--border);
+}
+
+.deal-row.is-stale {
+  opacity: 0.55;
+}
+
+.deal-row.is-selected {
+  background: #eef6ff;
+}

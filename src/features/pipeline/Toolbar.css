@@ -1,0 +1,11 @@
+.toolbar,
+.toolbar-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+
+.toolbar-group {
+  gap: 4px;
+}

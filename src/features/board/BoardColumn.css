@@ -1,0 +1,61 @@
+.board-column {
+  display: flex;
+  flex: 1 0 210px;
+  flex-direction: column;
+  min-width: 210px;
+  min-height: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.board-column.is-over {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.column-header {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.column-header h2 {
+  margin: 0;
+  font-size: 14px;
+}
+
+.column-scroller {
+  flex: 1;
+  min-height: 0;
+  padding: 0 8px;
+  overflow-y: auto;
+}
+
+.column-scroller:focus-visible {
+  outline-offset: -2px;
+}
+
+.column-body {
+  position: relative;
+  margin-top: 8px;
+}
+
+.column-empty {
+  margin: 16px 0;
+  color: var(--muted);
+  text-align: center;
+}
+
+.column-body .deal-card {
+  position: absolute;
+  inset: 0 0 auto;
+}
+
+.column-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}

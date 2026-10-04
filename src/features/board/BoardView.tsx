@@ -16,6 +16,7 @@ import { useStageSummary } from '../pipeline/useStageSummary';
 import { BoardColumn, columnDomId } from './BoardColumn';
 import { requestMove } from '../selection/requestMove';
 import { DealCardPreview } from './DealCard';
+import './BoardView.css';
 
 const SCREEN_READER_INSTRUCTIONS = {
   draggable:

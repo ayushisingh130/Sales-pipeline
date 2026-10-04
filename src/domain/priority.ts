@@ -27,7 +27,7 @@ export function attentionReasons(deal: Deal, now: number): AttentionReason[] {
   if (daysToClose < 0) {
     reasons.push({ kind: 'overdue', label: `Overdue ${-daysToClose}d`, weight: 3 });
   } else if (daysToClose <= CLOSING_SOON_DAYS) {
-    const label = daysToClose === 0 ? 'Closes today' : `Closes in ${daysToClose}d`;
+    const label = daysToClose === 0 ? 'Due today' : `Due in ${daysToClose}d`;
     reasons.push({ kind: 'closing_soon', label, weight: 2 });
   }
 

@@ -2,6 +2,7 @@ import type { Deal } from '../../api/types';
 import { STAGE_LABELS } from '../../domain/stages';
 import { usePipeline } from '../../services';
 import { isOutOfPlace } from '../../sync/store';
+import './RemoteChange.css';
 
 /** Whether a teammate's change has left this deal out of place in the frozen view. */
 export function useOutOfPlace(id: string): boolean {

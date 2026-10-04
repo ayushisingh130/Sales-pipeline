@@ -11,6 +11,7 @@ import {
 } from '../../domain/query';
 import { usePipeline, useServices } from '../../services';
 import { focusResults, SEARCH_INPUT_ID } from '../keyboard/focus';
+import './Toolbar.css';
 
 const SEARCH_DEBOUNCE_MS = 150;
 

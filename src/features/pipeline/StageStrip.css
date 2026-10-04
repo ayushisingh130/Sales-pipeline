@@ -1,0 +1,24 @@
+.stage-strip {
+  display: flex;
+  gap: 6px;
+  margin: 0;
+  padding: 0 0 2px;
+  list-style: none;
+  overflow-x: auto;
+}
+
+.stage-strip button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 108px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  cursor: pointer;
+}
+
+.stage-strip strong {
+  font-size: 16px;
+}

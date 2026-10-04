@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useStore } from 'zustand';
 import { DEFAULT_SIM_CONFIG, type SimConfig } from '../../api/simConfig';
 import { useServices } from '../../services';
+import './SimulatorPanel.css';
 
 const FAILURE_MIXES: Record<string, { label: string; mix: SimConfig['failureMix'] }> = {
   mixed: { label: 'Mixed', mix: DEFAULT_SIM_CONFIG.failureMix },

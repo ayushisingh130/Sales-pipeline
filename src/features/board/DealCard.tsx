@@ -8,9 +8,10 @@ import { useDeal, usePipeline, useServices } from '../../services';
 import { SelectBox, selectionClick } from '../selection/SelectBox';
 import { outOfPlaceNote, RemoteFlash, useOutOfPlace } from '../sync-status/RemoteChange';
 import { SaveStatus } from '../sync-status/SaveStatus';
+import './DealCard.css';
 
 /** Card height plus the gap below it. Fixed, so the column virtualizer never has to measure. */
-export const CARD_SLOT_HEIGHT = 100;
+export const CARD_SLOT_HEIGHT = 108;
 
 export const cardDomId = (dealId: string) => `deal-card-${dealId}`;
 

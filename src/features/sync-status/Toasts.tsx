@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { usePipeline } from '../../services';
 import type { Toast } from '../../sync/store';
+import './Toasts.css';
 
 const DISMISS_AFTER_MS = { info: 5_000, error: 10_000 };
 

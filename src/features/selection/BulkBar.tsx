@@ -3,6 +3,7 @@ import { formatCount, formatInrCompact } from '../../domain/format';
 import { STAGE_LABELS, STAGES, type Stage } from '../../domain/stages';
 import { usePipeline, useServices } from '../../services';
 import { requestMove } from './requestMove';
+import './BulkBar.css';
 
 /** Appears while deals are selected. Floats at the bottom so it never shifts the layout. */
 export function BulkBar() {

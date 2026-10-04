@@ -4,6 +4,7 @@ import { nextStage, STAGE_LABELS, STAGES, type Stage } from '../../domain/stages
 import { useDeal, usePipeline, useServices } from '../../services';
 import { requestMove } from '../selection/requestMove';
 import { Modal } from './Modal';
+import './MoveMenu.css';
 
 const optionDomId = (stage: Stage) => `move-option-${stage}`;
 
